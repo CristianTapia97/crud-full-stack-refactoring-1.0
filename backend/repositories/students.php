@@ -9,6 +9,7 @@
 *    Iteration   : 3.0 ( prototype )
 */
 
+
 function getAllStudents($conn) 
 {
     $sql = "SELECT * FROM students";
@@ -16,12 +17,11 @@ function getAllStudents($conn)
     //MYSQLI_ASSOC devuelve un array ya listo para convertir en JSON:
     return $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
 }
-function getAllStudents($conn) 
+function getTotalStudents($conn) 
 {
-    $sql = "SELECT * FROM students";
-
-    //MYSQLI_ASSOC devuelve un array ya listo para convertir en JSON:
-    return $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+    $sql = "SELECT COUNT(*) AS total FROM students";
+    $result = $conn->query($sql);
+    return $result->fetch_assoc()['total'];
 }
 function getPaginatedStudents($conn, $limit, $offset) 
 {

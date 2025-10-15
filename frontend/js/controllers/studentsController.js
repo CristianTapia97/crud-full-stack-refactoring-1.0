@@ -58,7 +58,7 @@ function setupCancelHandler()
         document.getElementById('studentId').value = '';
     });
 }
-  function setupPaginationControls() 
+function setupPaginationControls() 
 {
     document.getElementById('prevPage').addEventListener('click', () => 
     {
@@ -105,8 +105,12 @@ async function loadStudents()
 {
     try 
     {
-        const students = await studentsAPI.fetchAll();
-        renderStudentTable(students);
+        const resPerPage = parseInt(document.getElementById('resultsPerPage').value, 10) || limit;
+        const data = await studentsAPI.fetchPaginated(currentPage, resPerPage);
+        console.log(data);
+        renderStudentTable(data.students);
+        totalPages = Math.ceil(data.total / resPerPage);
+        document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
     } 
     catch (err) 
     {
