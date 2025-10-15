@@ -10,11 +10,16 @@
 
 import { studentsAPI } from '../api/studentsAPI.js';
 
+let currentPage = 1;
+let totalPages = 1;
+const limit = 5;
+
 document.addEventListener('DOMContentLoaded', () => 
 {
     loadStudents();
     setupFormHandler();
     setupCancelHandler();
+    setupPaginationControls();
 });
   
 function setupFormHandler()
@@ -53,7 +58,33 @@ function setupCancelHandler()
         document.getElementById('studentId').value = '';
     });
 }
-  
+  function setupPaginationControls() 
+{
+    document.getElementById('prevPage').addEventListener('click', () => 
+    {
+        if (currentPage > 1) 
+        {
+            currentPage--;
+            loadStudents();
+        }
+    });
+
+    document.getElementById('nextPage').addEventListener('click', () => 
+    {
+        if (currentPage < totalPages) 
+        {
+            currentPage++;
+            loadStudents();
+        }
+    });
+
+    document.getElementById('resultsPerPage').addEventListener('change', e => 
+    {
+        currentPage = 1;
+        loadStudents();
+    });
+}
+
 function getFormData()
 {
     return {

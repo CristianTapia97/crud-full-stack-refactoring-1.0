@@ -16,7 +16,21 @@ function getAllStudents($conn)
     //MYSQLI_ASSOC devuelve un array ya listo para convertir en JSON:
     return $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
 }
+function getAllStudents($conn) 
+{
+    $sql = "SELECT * FROM students";
 
+    //MYSQLI_ASSOC devuelve un array ya listo para convertir en JSON:
+    return $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+}
+function getPaginatedStudents($conn, $limit, $offset) 
+{
+    $stmt = $conn->prepare("SELECT * FROM students LIMIT ? OFFSET ?");
+    $stmt->bind_param("ii", $limit, $offset);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
 function getStudentById($conn, $id) 
 {
     $stmt = $conn->prepare("SELECT * FROM students WHERE id = ?");
