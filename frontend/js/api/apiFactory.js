@@ -10,7 +10,7 @@
 
 export function createAPI(moduleName, config = {}) 
 {
-    const API_URL = config.urlOverride ?? `http://localhost:8000?module=${moduleName}`;
+    const API_URL = config.urlOverride ?? `http://localhost:3000/backend/server.php?module=${moduleName}`;
 
     async function sendJSON(method, data) 
     {
